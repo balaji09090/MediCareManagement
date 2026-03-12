@@ -24,19 +24,19 @@ public class PatientServiceImpl implements PatientService {
     
     @Override
     public void add(Patient patient) {
-        pr.save(patient);
+        
         
 //        id
         int id = patient.getId();
         if(id>0) {
     		if(pr.existsById(id)) {
-    			throw new InvalidId("Id Already Exixts");	
+    			throw new InvalidId("Id Already Exists");	
     		}
     	}
         
 //        name
         String name = patient.getName();
-        if(!patient.getName().matches("[a-zA-Z]+")) {
+        if(!patient.getName().matches("[a-zA-Z ]+")) {
         	throw new InvalidName("Name Should Contain Only Letters");
         }
         
@@ -60,6 +60,7 @@ public class PatientServiceImpl implements PatientService {
         if(patient.getDateOfBirth() == null ) {
         	throw new InvalidDoB("Date of Birth cannot be null");
         }
+        pr.save(patient);
     }
 
     @Override
