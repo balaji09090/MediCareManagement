@@ -21,7 +21,8 @@ public class PatientServiceImpl implements PatientService {
     private PatientRepository pr; 
 
     
-    @Override
+    @SuppressWarnings("unused")
+	@Override
     public void add(Patient patient) {
         
         

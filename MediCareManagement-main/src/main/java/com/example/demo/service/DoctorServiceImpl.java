@@ -7,8 +7,11 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.example.demo.exception.InvalidAvailabilityStatus;
+import com.example.demo.exception.InvalidConsultationFee;
 import com.example.demo.exception.InvalidEmail;
 import com.example.demo.exception.InvalidId;
+import com.example.demo.exception.InvalidMobileNumber;
 import com.example.demo.exception.InvalidName;
 import com.example.demo.exception.InvalidQualification;
 import com.example.demo.exception.InvalidSpecialization;
@@ -22,6 +25,7 @@ public class DoctorServiceImpl implements DoctorService {
 	@Autowired
 	private DoctorRepository dr;
 
+	@SuppressWarnings("unused")
 	@Override
 	public void add(Doctor doctor) {
 		// TODO Auto-generated method stub
@@ -60,14 +64,47 @@ public class DoctorServiceImpl implements DoctorService {
 		if (dr.existByEmail(email)) {
 			throw new InvalidEmail("Email Already Exists");
 		}
+		
 		if (email == null || email.isEmpty()) {
 			throw new InvalidEmail("Email Cannot Be Empty");
 		}
+		
 		if (!email.matches("^[A-Za-z0-9+_.-]+@(.+)$")) {
 			throw new InvalidEmail("Invalid Email Format");
 		}
 		
 //		mob
+		String mob = doctor.getMob();
+		if (mob.length() == 10) {
+			if (mob.charAt(0) == '0' || mob.charAt(0) == '1' || mob.charAt(0) == '2' || mob.charAt(0) == '3' || mob.charAt(0) == '4' || mob.charAt(0) == '5')
+				throw new InvalidMobileNumber("INVALID MOBILE NUMBER");
+			
+			for (int i=0; i< mob.length(); i++) {
+				if (!Character.isDigit(mob.charAt(i)))
+					throw new InvalidMobileNumber("INVALID MOBILE NUMBER");
+		}
+	}else 
+	    throw new InvalidMobileNumber("INVALID MOBILE NUMBER");
+		
+//		consultationFee
+		Double consultationFee = doctor.getConsultationFee();
+		if(consultationFee == null) {
+			throw new InvalidConsultationFee("Consultation Fee cannot be Null");
+		}
+		
+		if(consultationFee <= 0) {
+			throw new InvalidConsultationFee("Consultation Fee must be greater than 0");
+		}
+		
+//		availabilityStatus
+		String availabilityStatus = doctor.getAvailabilityStatus();
+		if(availabilityStatus == null || availabilityStatus.isEmpty()) {
+			throw new InvalidAvailabilityStatus("Availability Status");
+		}
+		
+		if (!availabilityStatus.equalsIgnoreCase("AVAILABLE") && !availabilityStatus.equalsIgnoreCase("NOT_AVAILABLE") && !availabilityStatus.equalsIgnoreCase("ON_LEAVE")) {
+			throw new RuntimeException("Invalid Availability Status");
+			}
 		
 		dr.save(doctor);
 	}
