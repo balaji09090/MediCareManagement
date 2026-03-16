@@ -7,8 +7,11 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.example.demo.exception.InvalidEmail;
 import com.example.demo.exception.InvalidId;
 import com.example.demo.exception.InvalidName;
+import com.example.demo.exception.InvalidQualification;
+import com.example.demo.exception.InvalidSpecialization;
 import com.example.demo.model.Doctor;
 import com.example.demo.model.Patient;
 import com.example.demo.repository.DoctorRepository;
@@ -37,7 +40,34 @@ public class DoctorServiceImpl implements DoctorService {
         	throw new InvalidName("Name Should Contain Only Letters");
 		}
 		
-//		
+//		specialization
+		String specialization = doctor.getSpecialization();
+		if(specialization == null || specialization.isEmpty()) {
+			throw new InvalidSpecialization("Specialization cannot be empty");
+		}
+		
+//		qualification 
+		String qualification = doctor.getQualification();
+		if(qualification == null || qualification.isEmpty()) {
+			throw new InvalidQualification("Qualification cannot be empty");
+		}
+		if(!qualification.matches("[a-zA-Z. ]+")) {
+			throw new InvalidQualification("Qualification should contain only letters");
+		}
+		
+//		email
+		String email = doctor.getEmail();
+		if (dr.existByEmail(email)) {
+			throw new InvalidEmail("Email Already Exists");
+		}
+		if (email == null || email.isEmpty()) {
+			throw new InvalidEmail("Email Cannot Be Empty");
+		}
+		if (!email.matches("^[A-Za-z0-9+_.-]+@(.+)$")) {
+			throw new InvalidEmail("Invalid Email Format");
+		}
+		
+//		mob
 		
 		dr.save(doctor);
 	}

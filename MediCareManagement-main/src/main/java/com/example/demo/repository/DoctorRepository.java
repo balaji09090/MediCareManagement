@@ -15,4 +15,6 @@ public interface DoctorRepository extends JpaRepository<Doctor, Integer> {
 	
 	List<Doctor> findByAvailabilityStatus(String status);
 
+	boolean existByEmail(String email);
+
 }
