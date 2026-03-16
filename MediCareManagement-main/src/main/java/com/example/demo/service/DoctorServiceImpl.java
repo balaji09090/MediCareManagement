@@ -7,6 +7,8 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.example.demo.exception.InvalidId;
+import com.example.demo.exception.InvalidName;
 import com.example.demo.model.Doctor;
 import com.example.demo.model.Patient;
 import com.example.demo.repository.DoctorRepository;
@@ -20,6 +22,23 @@ public class DoctorServiceImpl implements DoctorService {
 	@Override
 	public void add(Doctor doctor) {
 		// TODO Auto-generated method stub
+		
+//		id
+		int id = doctor.getId();
+		if(id>0) {
+			if(dr.existsById(id)) {
+				throw new InvalidId("Id Already Exists");
+			}
+		}
+		
+//		name
+		String name = doctor.getName();
+		if(!doctor.getName().matches("[a-zA-Z ]+")) {
+        	throw new InvalidName("Name Should Contain Only Letters");
+		}
+		
+//		
+		
 		dr.save(doctor);
 	}
 
