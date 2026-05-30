@@ -61,7 +61,7 @@ public class DoctorServiceImpl implements DoctorService {
 		
 //		email
 		String email = doctor.getEmail();
-		if (dr.existByEmail(email)) {
+		if (dr.existsByEmail(email)) {
 			throw new InvalidEmail("Email Already Exists");
 		}
 		
