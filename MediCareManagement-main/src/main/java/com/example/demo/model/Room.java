@@ -9,7 +9,7 @@ import jakarta.persistence.Id;
 public class Room {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+//	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 	private String roomNumber;   
 	private String roomType;    

@@ -29,13 +29,15 @@ public class PatientServiceImpl implements PatientService {
     public void add(Patient patient) {
         
         
-//        id
-        int id = patient.getId();
-        if(id>0) {
-    		if(pr.existsById(id)) {
-    			throw new InvalidId("Id Already Exists");	
-    		}
-    	} 
+//      id
+      if (patient.getId() != null) {
+          if (patient.getId() > 0) {
+              if (pr.existsById(patient.getId())) {
+                  throw new InvalidId("Id Already Exists");    
+              }
+          }
+      }
+
         
 //        name
         String name = patient.getName();
