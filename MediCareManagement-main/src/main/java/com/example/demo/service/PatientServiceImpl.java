@@ -13,6 +13,7 @@ import com.example.demo.exception.InvalidGender;
 import com.example.demo.exception.InvalidId;
 import com.example.demo.exception.InvalidMobileNumber;
 import com.example.demo.exception.InvalidName;
+import com.example.demo.exception.InvalidSymptoms;
 import com.example.demo.model.Patient;
 import com.example.demo.repository.PatientRepository;
 
@@ -83,8 +84,17 @@ public class PatientServiceImpl implements PatientService {
 			throw new InvalidBloodGroup("Invalid Blood Group");
 		}
 		
-//		Address
+//		Disease Validation
+		String disease = patient.getDisease();
+		if (disease == null || disease.trim().isEmpty()) {
+		    throw new InvalidSymptoms("Disease or symptoms field cannot be empty.");
+		}
 		
+		// Address Validation
+		String address = patient.getAddress();
+		if (address == null || address.trim().isEmpty()) {
+		    throw new InvalidName("Patient address cannot be empty.");
+		}
 		
         pr.save(patient);
     }
