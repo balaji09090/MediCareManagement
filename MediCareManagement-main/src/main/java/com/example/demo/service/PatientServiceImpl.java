@@ -7,9 +7,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.example.demo.exception.InvalidAge;
+import com.example.demo.exception.InvalidBloodGroup;
 import com.example.demo.exception.InvalidDoB;
 import com.example.demo.exception.InvalidGender;
 import com.example.demo.exception.InvalidId;
+import com.example.demo.exception.InvalidMobileNumber;
 import com.example.demo.exception.InvalidName;
 import com.example.demo.model.Patient;
 import com.example.demo.repository.PatientRepository;
@@ -61,7 +63,29 @@ public class PatientServiceImpl implements PatientService {
         	throw new InvalidDoB("Date of Birth cannot be null");
         }
         
-        
+//      Mobile validation
+		String mob = patient.getMob();
+		
+		if (mob.length() == 10) {
+			if (mob.charAt(0) == '0' || mob.charAt(0) == '1' || mob.charAt(0) == '2' || mob.charAt(0) == '3' || mob.charAt(0) == '4' || mob.charAt(0) == '5')
+				throw new InvalidMobileNumber("INVALID MOBILE NUMBER");
+			
+			for (int i=0; i< mob.length(); i++) {
+				if (!Character.isDigit(mob.charAt(i)))
+					throw new InvalidMobileNumber("INVALID MOBILE NUMBER");
+				}
+			}else 
+	    throw new InvalidMobileNumber("INVALID MOBILE NUMBER");  
+		
+//		Blood Group
+		String bloodGroup = patient.getBloodGroup();
+		if(patient.getBloodGroup() == null) {
+			throw new InvalidBloodGroup("Invalid Blood Group");
+		}
+		
+//		Address
+		
+		
         pr.save(patient);
     }
     
