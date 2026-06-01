@@ -18,6 +18,8 @@ public class RoomServiceImpl implements RoomService {
         if (room.getIsAvailable() == null) {
             room.setIsAvailable(true);
         }
+        
+        
         roomRepository.save(room);
     }
 

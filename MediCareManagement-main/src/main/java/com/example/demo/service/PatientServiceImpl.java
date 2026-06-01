@@ -32,7 +32,7 @@ public class PatientServiceImpl implements PatientService {
     		if(pr.existsById(id)) {
     			throw new InvalidId("Id Already Exists");	
     		}
-    	}
+    	} 
         
 //        name
         String name = patient.getName();
@@ -60,8 +60,11 @@ public class PatientServiceImpl implements PatientService {
         if(patient.getDateOfBirth() == null ) {
         	throw new InvalidDoB("Date of Birth cannot be null");
         }
+        
+        
         pr.save(patient);
     }
+    
 
     @Override
     public List<Patient> display() {

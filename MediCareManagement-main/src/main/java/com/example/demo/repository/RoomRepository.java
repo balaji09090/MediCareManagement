@@ -16,4 +16,8 @@ public interface RoomRepository extends JpaRepository<Room, Integer> {
     
     // Lookup a room record by its explicit room string number (e.g., "101-A")
     java.util.Optional<Room> findByRoomNumber(String roomNumber);
+    
+     
+      
+    
 }
