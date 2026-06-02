@@ -9,7 +9,7 @@ public class MediCareManagementApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(MediCareManagementApplication.class, args);
 		
-		
+	 	
 	}
 
 }
