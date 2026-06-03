@@ -6,4 +6,6 @@ public interface BillRepository {
 
 	Bill save(Bill bill);
 
+	boolean existsByAppointmentId(Integer appointmentId);
+
 }
